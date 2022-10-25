@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace CoreCourse.Efbasics.Core.Entities
 {
-    public class Course
+    public class Course : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public Teacher Teacher { get; set; }
         //navigation property
         public int TeacherId { get; set; }
         //unshadowed foreign key props
+        //students
+        public ICollection<Student> Student { get; set; }
     }
 }
