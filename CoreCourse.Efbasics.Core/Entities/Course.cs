@@ -9,11 +9,13 @@ namespace CoreCourse.Efbasics.Core.Entities
     public class Course : BaseEntity
     {
         public string Name { get; set; }
-        public Teacher Teacher { get; set; }
-        //navigation property
-        public int TeacherId { get; set; }
-        //unshadowed foreign key props
-        //students
+        //course has many students
         public ICollection<Student> Student { get; set; }
+        //course has one teacher
+        public Teacher Teacher { get; set; }
+        //unshadowed foreign key property
+        //nullable for allow nulls
+        public int? TeacherId { get; set; }
+        
     }
 }

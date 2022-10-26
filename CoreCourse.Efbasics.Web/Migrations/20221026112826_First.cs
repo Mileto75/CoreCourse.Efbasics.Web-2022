@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoreCourse.Efbasics.Web.Migrations
 {
-    public partial class first : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,13 @@ namespace CoreCourse.Efbasics.Web.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Municipality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CellNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,8 +36,9 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Firstname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Lastname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    ContactInfoId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    ContactInfoId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,8 +47,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         name: "FK_Students_ContactInfo_ContactInfoId",
                         column: x => x.ContactInfoId,
                         principalTable: "ContactInfo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -53,9 +58,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Firstname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Lastname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
-                    ContactInfoId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ContactInfoId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +69,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         column: x => x.ContactInfoId,
                         principalTable: "ContactInfo",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,8 +79,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TeacherId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,7 +90,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,12 +131,15 @@ namespace CoreCourse.Efbasics.Web.Migrations
                 name: "IX_Students_ContactInfoId",
                 table: "Students",
                 column: "ContactInfoId",
-                unique: true);
+                unique: true,
+                filter: "[ContactInfoId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_ContactInfoId",
                 table: "Teachers",
-                column: "ContactInfoId");
+                column: "ContactInfoId",
+                unique: true,
+                filter: "[ContactInfoId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -10,8 +10,9 @@ namespace CoreCourse.Efbasics.Core.Entities
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Username { get; set; }
         public ICollection<Course> Courses { get; set;}
         public ContactInfo ContactInfo { get; set; }
-        public int ContactInfoId { get; set; }
+        public int? ContactInfoId { get; set; }
     }
 }

@@ -30,11 +30,26 @@ namespace CoreCourse.Efbasics.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("CellNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Municipality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -49,7 +64,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -57,7 +72,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -75,10 +90,49 @@ namespace CoreCourse.Efbasics.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ContactInfoId")
+                    b.Property<int?>("ContactInfoId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactInfoId")
+                        .IsUnique()
+                        .HasFilter("[ContactInfoId] IS NOT NULL");
+
+                    b.ToTable("Students", (string)null);
+                });
+
+            modelBuilder.Entity("CoreCourse.Efbasics.Core.Entities.Teacher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("ContactInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Firstname")
@@ -94,41 +148,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ContactInfoId")
-                        .IsUnique();
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("CoreCourse.Efbasics.Core.Entities.Teacher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ContactInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContactInfoId");
+                        .IsUnique()
+                        .HasFilter("[ContactInfoId] IS NOT NULL");
 
                     b.ToTable("Teachers");
                 });
@@ -153,8 +174,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     b.HasOne("CoreCourse.Efbasics.Core.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Teacher");
                 });
@@ -163,9 +183,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                 {
                     b.HasOne("CoreCourse.Efbasics.Core.Entities.ContactInfo", "ContactInfo")
                         .WithOne("Student")
-                        .HasForeignKey("CoreCourse.Efbasics.Core.Entities.Student", "ContactInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoreCourse.Efbasics.Core.Entities.Student", "ContactInfoId");
 
                     b.Navigation("ContactInfo");
                 });
@@ -173,10 +191,9 @@ namespace CoreCourse.Efbasics.Web.Migrations
             modelBuilder.Entity("CoreCourse.Efbasics.Core.Entities.Teacher", b =>
                 {
                     b.HasOne("CoreCourse.Efbasics.Core.Entities.ContactInfo", "ContactInfo")
-                        .WithMany()
-                        .HasForeignKey("ContactInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Teacher")
+                        .HasForeignKey("CoreCourse.Efbasics.Core.Entities.Teacher", "ContactInfoId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("ContactInfo");
                 });
@@ -199,6 +216,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
             modelBuilder.Entity("CoreCourse.Efbasics.Core.Entities.ContactInfo", b =>
                 {
                     b.Navigation("Student");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("CoreCourse.Efbasics.Core.Entities.Teacher", b =>
