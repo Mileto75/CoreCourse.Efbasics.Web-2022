@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreCourse.Efbasics.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20221026112826_First")]
+    [Migration("20221026115023_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,7 +97,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
 
                     b.Property<DateTime?>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
@@ -161,12 +162,12 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("StudentsId")
                         .HasColumnType("int");
 
-                    b.HasKey("CoursesId", "StudentId");
+                    b.HasKey("CoursesId", "StudentsId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentsId");
 
                     b.ToTable("CourseStudent");
                 });
@@ -210,7 +211,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
 
                     b.HasOne("CoreCourse.Efbasics.Core.Entities.Student", null)
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

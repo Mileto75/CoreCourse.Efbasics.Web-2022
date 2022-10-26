@@ -10,7 +10,7 @@ namespace CoreCourse.Efbasics.Core.Entities
     {
         public string Name { get; set; }
         //course has many students
-        public ICollection<Student> Student { get; set; }
+        public ICollection<Student> Students { get; set; }
         //course has one teacher
         public Teacher Teacher { get; set; }
         //unshadowed foreign key property

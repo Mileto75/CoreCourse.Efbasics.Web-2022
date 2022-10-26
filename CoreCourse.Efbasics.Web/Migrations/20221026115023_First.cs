@@ -38,7 +38,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     Lastname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     ContactInfoId = table.Column<int>(type: "int", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GetDate()")
                 },
                 constraints: table =>
                 {
@@ -98,11 +98,11 @@ namespace CoreCourse.Efbasics.Web.Migrations
                 columns: table => new
                 {
                     CoursesId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    StudentsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseStudent", x => new { x.CoursesId, x.StudentId });
+                    table.PrimaryKey("PK_CourseStudent", x => new { x.CoursesId, x.StudentsId });
                     table.ForeignKey(
                         name: "FK_CourseStudent_Courses_CoursesId",
                         column: x => x.CoursesId,
@@ -110,8 +110,8 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Students_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_CourseStudent_Students_StudentsId",
+                        column: x => x.StudentsId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -123,9 +123,9 @@ namespace CoreCourse.Efbasics.Web.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseStudent_StudentId",
+                name: "IX_CourseStudent_StudentsId",
                 table: "CourseStudent",
-                column: "StudentId");
+                column: "StudentsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_ContactInfoId",

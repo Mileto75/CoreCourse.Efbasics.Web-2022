@@ -38,9 +38,11 @@ namespace CoreCourse.Efbasics.Web.Data
                 .Property(s => s.Username)
                 .IsRequired()
                 .HasMaxLength(120);
+            //example of default date insertion in SQL server
             modelBuilder.Entity<Student>()
                 .Property(s => s.DateCreated)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("GetDate()");
             //set delete is null for Courses table
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Teacher)
