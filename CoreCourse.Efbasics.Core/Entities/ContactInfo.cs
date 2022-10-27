@@ -14,6 +14,7 @@ namespace CoreCourse.Efbasics.Core.Entities
         public string Municipality { get; set; }
         public string TelNumber { get; set; }
         public string CellNumber { get; set; }
+        //one to one navigation prop
         public Teacher Teacher { get; set; }
         public Student Student { get; set; }
     }

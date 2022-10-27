@@ -12,7 +12,9 @@ namespace CoreCourse.Efbasics.Core.Entities
         public string Lastname { get; set; }
         public string Username { get; set; }
         public ICollection<Course> Courses { get; set;}
+        //one to one contactinfo propa
         public ContactInfo ContactInfo { get; set; }
+        //unshadowed foreign key property
         public int? ContactInfoId { get; set; }
     }
 }

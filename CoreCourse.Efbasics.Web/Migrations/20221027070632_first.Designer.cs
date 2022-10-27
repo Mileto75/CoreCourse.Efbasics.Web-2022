@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreCourse.Efbasics.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20221026115023_First")]
-    partial class First
+    [Migration("20221027070632_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

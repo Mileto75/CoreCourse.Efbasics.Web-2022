@@ -1,4 +1,5 @@
 ﻿using CoreCourse.Efbasics.Core.Entities;
+using CoreCourse.Efbasics.Web.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreCourse.Efbasics.Web.Data
@@ -53,7 +54,9 @@ namespace CoreCourse.Efbasics.Web.Data
                 .HasOne(t => t.ContactInfo)
                 .WithOne(co => co.Teacher)
                 .OnDelete(DeleteBehavior.SetNull);
-
+            //end database configuration
+            //seeding
+            DataSeeder.Seed(modelBuilder);
         }
     }
 }
