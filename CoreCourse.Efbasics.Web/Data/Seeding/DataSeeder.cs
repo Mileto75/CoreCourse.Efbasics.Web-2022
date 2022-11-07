@@ -24,14 +24,14 @@ namespace CoreCourse.Efbasics.Web.Data.Seeding
             //students
             var students = new Student[]
             {
-                new Student{Id=1,Firstname="Jimi",Lastname="Hendrix",Username="jimi@gmail.com",ContactInfoId=1},
-                new Student{Id=2,Firstname="Rory",Lastname="Gallagher",Username="jimi@gmail.com",ContactInfoId=2},
+                new Student{Id=1,Image="person.jpg", Firstname="Jimi",Lastname="Hendrix",Username="jimi@gmail.com",ContactInfoId=1},
+                new Student{Id=2,Image="person.jpg", Firstname="Rory",Lastname="Gallagher",Username="jimi@gmail.com",ContactInfoId=2},
             };
             //teachers
             var teachers = new Teacher[]
             {
-                new Teacher{Id=1,Firstname="Bart",Lastname="Soete",ContactInfoId=3,DateCreated=DateTime.UtcNow},
-                new Teacher{Id=2,Firstname="Willy",Lastname="Schokkelé",ContactInfoId=4,DateCreated=DateTime.UtcNow},
+                new Teacher{Id=1,Image="person.jpg",Firstname="Bart",Lastname="Soete",ContactInfoId=3,DateCreated=DateTime.UtcNow},
+                new Teacher{Id=2,Image="person.jpg",Firstname="Willy",Lastname="Schokkelé",ContactInfoId=4,DateCreated=DateTime.UtcNow},
             };
             //Courses
             var courses = new Course[]

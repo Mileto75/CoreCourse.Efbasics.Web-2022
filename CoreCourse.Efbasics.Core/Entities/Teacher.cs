@@ -16,7 +16,7 @@ namespace CoreCourse.Efbasics.Core.Entities
         [Required]
         [MaxLength(120)]
         public string Lastname { get; set; }
-        //one to many with Course
+        public string Image { get; set; }
         public ICollection<Course> Courses { get; set; }
         //one to one with ContactInfo
         public ContactInfo ContactInfo { get; set; }

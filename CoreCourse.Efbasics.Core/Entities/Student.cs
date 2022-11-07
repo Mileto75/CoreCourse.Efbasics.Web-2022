@@ -11,6 +11,7 @@ namespace CoreCourse.Efbasics.Core.Entities
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Username { get; set; }
+        public string Image { get; set; }
         public ICollection<Course> Courses { get; set;}
         //one to one contactinfo propa
         public ContactInfo ContactInfo { get; set; }
