@@ -6,19 +6,12 @@
             <tr>
                 <th>Course</th>
                 <th>Teacher</th>
-                <th>Students</th>
             </tr>
             @foreach(var course in Model.Courses)
             {
                 <tr>
                     <td>@course.Name</td>
                     <td>@course.Teacher.Name</td>
-                    <td>
-                        @foreach(var student in course.Students)
-                        { 
-                            <span class="text-info">@student.Name</span>
-                        }
-                    </td>
                 </tr>
             }
         </table>
