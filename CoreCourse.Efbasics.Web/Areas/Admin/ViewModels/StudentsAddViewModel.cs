@@ -15,5 +15,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.ViewModels
         [Required(ErrorMessage = "Please provide username")]
         [EmailAddress(ErrorMessage = "Please provide a valid email")]
         public string Username{ get; set; }
+        [Display(Name = "Mugshot")]
+        public IFormFile Image { get; set; }
     }
 }

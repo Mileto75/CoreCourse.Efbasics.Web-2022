@@ -10,10 +10,12 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
     public class StudentsController : Controller
     {
         private readonly SchoolDbContext _schoolDbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public StudentsController(SchoolDbContext schoolDbContext)
+        public StudentsController(SchoolDbContext schoolDbContext, IWebHostEnvironment webHostEnvironment)
         {
             _schoolDbContext = schoolDbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -51,6 +53,31 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             student.Firstname = studentsAddViewModel.Firstname;
             student.Lastname = studentsAddViewModel.Lastname;
             student.Username = studentsAddViewModel.Username;
+            //handle image upload
+            //check for null
+            if(studentsAddViewModel.Image == null )
+            {
+                student.Image = "person.jpg";
+            }
+            else
+            {
+                //create unique filename
+                var fileName = $"{Guid.NewGuid()}" +
+                    $"_{studentsAddViewModel.Image.FileName}";
+                //create the path to store the file
+                var pathToFile = Path
+                    .Combine(_webHostEnvironment.WebRootPath,"Images",fileName);
+                //create a filestream and copy file
+                using(var fileStream = new FileStream(pathToFile
+                    ,FileMode.Create))
+                {
+                    //copy file to disk
+                    studentsAddViewModel.Image.CopyTo(fileStream);
+                }
+                //add the filename to student
+                student.Image = fileName;
+            }
+            
             //add to the context
             _schoolDbContext.Students.Add(student);
             //save to db
