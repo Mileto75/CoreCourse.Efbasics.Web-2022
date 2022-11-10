@@ -1,0 +1,20 @@
+﻿@model StudentsIndexViewModel
+
+<div class="row">
+    <div class="col col-lg-4 mx-auto">
+        <h2>Our Students</h2>
+        <table class="table table-hover table-responsive-lg">
+            <tr>
+                <th>Name</th>
+            </tr>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.Name</td>
+                </tr>
+            }
+        </table>
+        <a asp-area="Admin" asp-controller="Students" asp-action="Add"
+           class="btn btn-outline-info">New student</a>
+    </div>
+</div>
