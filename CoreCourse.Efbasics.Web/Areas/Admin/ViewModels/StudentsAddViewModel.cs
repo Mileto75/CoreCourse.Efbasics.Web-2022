@@ -1,5 +1,6 @@
 ﻿
 
+using CoreCourse.Efbasics.Web.Areas.Admin.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreCourse.Efbasics.Web.Areas.Admin.ViewModels
@@ -17,5 +18,6 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.ViewModels
         public string Username{ get; set; }
         [Display(Name = "Mugshot")]
         public IFormFile Image { get; set; }
+        public List<CheckboxModel> Courses { get; set; }
     }
 }

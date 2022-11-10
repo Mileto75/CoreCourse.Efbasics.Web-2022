@@ -1,4 +1,5 @@
 ﻿using CoreCourse.Efbasics.Core.Entities;
+using CoreCourse.Efbasics.Web.Areas.Admin.Models;
 using CoreCourse.Efbasics.Web.Areas.Admin.ViewModels;
 using CoreCourse.Efbasics.Web.Data;
 using CoreCourse.Efbasics.Web.ViewModels;
@@ -36,7 +37,19 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         public IActionResult Add()
         {
             ViewBag.PageTitle = "Add student";
-            return View();
+            //get the courses and put in the model
+            var studentsAddViewModel
+                = new StudentsAddViewModel();
+            studentsAddViewModel.Courses
+                = _schoolDbContext
+                .Courses
+                .Select(c => new CheckboxModel
+                {
+                    Value= c.Id,
+                    Text= c.Name,
+                }).ToList();
+
+            return View(studentsAddViewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -47,12 +60,21 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             {
                 return View(studentsAddViewModel);
             }
+            //get the selected courses
+            var selectedCourses = studentsAddViewModel
+                .Courses
+                .Where(c => c.IsSelected == true)
+                .Select(c => c.Value);
             //create student
             var student = new Student();
             //fill the data
             student.Firstname = studentsAddViewModel.Firstname;
             student.Lastname = studentsAddViewModel.Lastname;
             student.Username = studentsAddViewModel.Username;
+            //add courses to student
+            student.Courses = _schoolDbContext
+                .Courses
+                .Where(c => selectedCourses.Contains(c.Id)).ToList();
             //handle image upload
             //check for null
             if(studentsAddViewModel.Image == null )
