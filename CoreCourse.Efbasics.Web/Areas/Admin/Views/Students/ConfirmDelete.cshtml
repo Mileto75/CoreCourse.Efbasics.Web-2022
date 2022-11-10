@@ -1,0 +1,14 @@
+﻿
+
+<div class="alert alert-primary" role="alert">
+    Are you sure?
+    <a asp-area="Admin"
+       asp-controller="Students"
+       asp-action="Delete"
+       asp-route-id="@ViewBag.Id" class="btn btn-danger">Yes</a>
+    <a asp-area="Admin"
+       asp-controller="Students"
+       asp-action="Index"
+       class="btn btn-info">No</a>
+</div>
+

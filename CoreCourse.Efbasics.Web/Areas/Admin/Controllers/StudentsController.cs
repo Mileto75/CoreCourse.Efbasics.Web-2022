@@ -4,6 +4,8 @@ using CoreCourse.Efbasics.Web.Areas.Admin.ViewModels;
 using CoreCourse.Efbasics.Web.Data;
 using CoreCourse.Efbasics.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
 {
@@ -19,16 +21,16 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var studentsIndexViewModel = new StudentsIndexViewModel
             {
-                Students = _schoolDbContext.Students
+                Students = await _schoolDbContext.Students
                 .Select(s => new BaseViewModel
                 {
                     Id = s.Id,
                     Name = $"{s.Firstname} {s.Lastname}"
-                })
+                }).ToListAsync()
             };
             return View(studentsIndexViewModel);
         }
@@ -104,6 +106,37 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             _schoolDbContext.Students.Add(student);
             //save to db
             _schoolDbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult ConfirmDelete(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            //get the student
+            var student = _schoolDbContext
+                .Students
+                .FirstOrDefault(s => s.Id == id);
+            //check null
+            if (student == null) 
+            {
+                return RedirectToAction("Index");
+            }
+            //mark for removal
+            _schoolDbContext.Students.Remove(student);
+            //send to db
+            try
+            {
+                _schoolDbContext.SaveChanges();
+            }
+            catch(DbException dbException)
+            {
+                Console.WriteLine(dbException.Message);
+            }
             return RedirectToAction("Index");
         }
     }
