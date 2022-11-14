@@ -5,6 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //Add database service
+//postgresSql database
+//builder.Services.AddDbContext<MovieContext>(options => options
+//.UseNpgsql(builder.Configuration.GetConnectionString("SchoolDb")
+//    ));
+
 builder.Services.AddDbContext<SchoolDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb"))
     );
