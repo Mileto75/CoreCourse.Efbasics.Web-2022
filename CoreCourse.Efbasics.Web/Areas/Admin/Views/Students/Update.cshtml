@@ -1,0 +1,18 @@
+﻿@model StudentsUpdateViewModel
+<div class="row">
+    <div class="col col-lg-4 mx-auto border border-1">
+        <div class="text-center">
+            <h2>@ViewBag.PageTitle</h2>
+            <img src="~/images/@Model.ImageFilename" class="img-fluid" />
+        </div>
+        <form asp-area="Admin" asp-controller="Students" asp-action="Update"
+              method="post" enctype="multipart/form-data">
+            <partial name="_studentFormPartial" model="@Model" />
+            @* Id of student to update *@
+            <input asp-for="Id" />
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+

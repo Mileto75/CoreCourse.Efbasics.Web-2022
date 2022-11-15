@@ -139,5 +139,58 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            //student
+            var student = await _schoolDbContext
+                .Students
+                .Include(s => s.Courses)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            //null
+            if(student == null) 
+            {
+                //show error view
+                return NotFound();
+            }
+            //instantiate viewmodel
+            StudentsUpdateViewModel studentsUpdateViewModel
+                = new StudentsUpdateViewModel
+                {
+                    Id = student.Id,
+                    Firstname = student.Firstname,
+                    Lastname  = student.Lastname,
+                    Username  = student.Username,
+                    Courses = await _schoolDbContext
+                    .Courses.Select(c => new CheckboxModel
+                    {
+                        Value= c.Id,
+                        Text= c.Name,
+                    }
+                    ).ToListAsync(),
+                    ImageFilename = student.Image
+                };
+            //check the courses checkboxes
+            //loop over checkboxes
+            foreach(var course in studentsUpdateViewModel.Courses)
+            {
+                if(student.Courses.Any(s => s.Id == course.Value))
+                {
+                    course.IsSelected = true;
+                }
+            }
+            //pageTitle
+            ViewBag.PageTitle = "Update student";
+            return View(studentsUpdateViewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(StudentsUpdateViewModel studentsAddViewModel)
+        {
+            //get the student data
+            return View();
+        }
+
     }
+    
 }
