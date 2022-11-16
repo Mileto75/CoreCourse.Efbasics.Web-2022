@@ -188,6 +188,12 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(StudentsUpdateViewModel studentsUpdateViewModel)
         {
+            
+            //check modelState
+            if(!ModelState.IsValid) 
+            {
+                return View(studentsUpdateViewModel);
+            }
             //get the student data
             var student = await _schoolDbContext
                 .Students
@@ -198,6 +204,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
             //fill values
             student.Firstname = studentsUpdateViewModel.Firstname;
             student.Lastname = studentsUpdateViewModel.Lastname;
