@@ -1,0 +1,42 @@
+﻿@model CoursesIndexViewModel
+<div class="row">
+    <div class="col col-lg-4 mx-auto">
+        <h2>Our courses</h2>
+        <a asp-area="Admin" asp-controller="Courses" asp-action="Add"
+           class="btn btn-outline-info">New course</a>
+        <table class="table table-hover table-responsive-lg">
+            <tr>
+                <th>Name</th>
+                <th>Teacher</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var course in Model.Courses)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td><a asp-area="Admin"
+                           asp-controller="Teachers"
+                           asp-action="Update"
+                           asp-route-id="@course.Teacher.Id" class="link-info">@course.Teacher.Name</a></td>
+                    <td>
+                        <a asp-area="Admin"
+                           asp-controller="courses"
+                           asp-action="Update"
+                           asp-route-id="@course.Id" class="btn btn-outline-info">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-area="Admin"
+                           asp-controller="courses"
+                           asp-action="ConfirmDelete"
+                           asp-route-id="@course.Id" class="btn btn-outline-danger">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</div>

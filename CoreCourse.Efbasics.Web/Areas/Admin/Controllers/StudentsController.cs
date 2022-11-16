@@ -152,7 +152,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             if(student == null) 
             {
                 //show error view
-                return NotFound();
+                return View("Error");
             }
             //instantiate viewmodel
             StudentsUpdateViewModel studentsUpdateViewModel
@@ -188,7 +188,6 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(StudentsUpdateViewModel studentsUpdateViewModel)
         {
-            
             //check modelState
             if(!ModelState.IsValid) 
             {
@@ -202,7 +201,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             //null check
             if (student == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             //fill values
