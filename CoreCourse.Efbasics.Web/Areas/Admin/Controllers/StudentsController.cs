@@ -56,7 +56,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(StudentsAddViewModel studentsAddViewModel)
+        public async Task<IActionResult> Add(StudentsAddViewModel studentsAddViewModel)
         {
             //check validation
             if (!ModelState.IsValid) 
@@ -116,12 +116,12 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //get the student
-            var student = _schoolDbContext
+            var student = await _schoolDbContext
                 .Students
-                .FirstOrDefault(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
             //check null
             if (student == null) 
             {
@@ -132,7 +132,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             //send to db
             try
             {
-                _schoolDbContext.SaveChanges();
+                await _schoolDbContext.SaveChangesAsync();
             }
             catch(DbException dbException)
             {
