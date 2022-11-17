@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoreCourse.Efbasics.Web.Areas.Admin.ViewModels
 {
@@ -7,5 +8,8 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.ViewModels
         [Display(Name = "Course name:")]
         [Required(ErrorMessage = "Please provide a course name!")]
         public string Name { get; set; }
+        //dropdown with the teachers
+        public int TeacherId { get; set; }
+        public IEnumerable<SelectListItem> Teachers { get; set; }
     }
 }

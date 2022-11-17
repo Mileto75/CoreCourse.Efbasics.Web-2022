@@ -9,6 +9,11 @@
                 <input asp-for="Name" class="form-control">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            @* dropdown with teachers *@
+            <div class="form-group">
+                <label asp-for="TeacherId"></label>
+                <select asp-for="TeacherId" asp-items="@Model.Teachers" class="form-select"></select>
+                </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
     </div>
