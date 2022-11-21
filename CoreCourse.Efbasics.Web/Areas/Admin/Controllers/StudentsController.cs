@@ -97,16 +97,16 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
                     ,FileMode.Create))
                 {
                     //copy file to disk
-                    studentsAddViewModel.Image.CopyTo(fileStream);
+                    await studentsAddViewModel.Image.CopyToAsync(fileStream);
                 }
                 //add the filename to student
                 student.Image = fileName;
             }
             
             //add to the context
-            _schoolDbContext.Students.Add(student);
+            await _schoolDbContext.Students.AddAsync(student);
             //save to db
-            _schoolDbContext.SaveChanges();
+            await _schoolDbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         [HttpGet]

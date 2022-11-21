@@ -6,12 +6,14 @@
             <tr>
                 <th>Course</th>
                 <th>Teacher</th>
+                <th>Price</th>
             </tr>
             @foreach(var course in Model.Courses)
             {
                 <tr>
                     <td>@course.Name</td>
                     <td>@course.Teacher.Name</td>
+                    <td>@course.Price &euro;</td>
                 </tr>
             }
         </table>

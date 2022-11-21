@@ -36,10 +36,10 @@ namespace CoreCourse.Efbasics.Web.Data.Seeding
             //Courses
             var courses = new Course[]
             {
-                new Course{Id=1,Name="Wba",TeacherId=1},
-                new Course{Id=2,Name="Wfa",TeacherId=2},
-                new Course{Id=3,Name="Prb",TeacherId=1},
-                new Course{Id=4,Name="Pra",TeacherId=2},
+                new Course{Id=1,Name="Wba",TeacherId=1,Price = 260.00M},
+                new Course{Id=2,Name="Wfa",TeacherId=2,Price = 240.00M},
+                new Course{Id=3,Name="Prb",TeacherId=1, Price = 120.00M},
+                new Course{Id=4,Name="Pra",TeacherId=2,Price = 230.00M},
             };
             //CourseStudents
             //anonymous objects bacause no entity

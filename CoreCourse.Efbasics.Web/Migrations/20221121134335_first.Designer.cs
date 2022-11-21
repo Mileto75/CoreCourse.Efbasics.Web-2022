@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreCourse.Efbasics.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20221107160613_Image")]
-    partial class Image
+    [Migration("20221121134335_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,10 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<decimal>("Price")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
+
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
@@ -118,24 +122,28 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         {
                             Id = 1,
                             Name = "Wba",
+                            Price = 260.00m,
                             TeacherId = 1
                         },
                         new
                         {
                             Id = 2,
                             Name = "Wfa",
+                            Price = 240.00m,
                             TeacherId = 2
                         },
                         new
                         {
                             Id = 3,
                             Name = "Prb",
+                            Price = 120.00m,
                             TeacherId = 1
                         },
                         new
                         {
                             Id = 4,
                             Name = "Pra",
+                            Price = 230.00m,
                             TeacherId = 2
                         });
                 });
@@ -243,7 +251,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         {
                             Id = 1,
                             ContactInfoId = 3,
-                            DateCreated = new DateTime(2022, 11, 7, 16, 6, 13, 523, DateTimeKind.Utc).AddTicks(1975),
+                            DateCreated = new DateTime(2022, 11, 21, 13, 43, 35, 411, DateTimeKind.Utc).AddTicks(7314),
                             Firstname = "Bart",
                             Image = "person.jpg",
                             Lastname = "Soete"
@@ -252,7 +260,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         {
                             Id = 2,
                             ContactInfoId = 4,
-                            DateCreated = new DateTime(2022, 11, 7, 16, 6, 13, 523, DateTimeKind.Utc).AddTicks(1978),
+                            DateCreated = new DateTime(2022, 11, 21, 13, 43, 35, 411, DateTimeKind.Utc).AddTicks(7317),
                             Firstname = "Willy",
                             Image = "person.jpg",
                             Lastname = "Schokkelé"

@@ -16,6 +16,8 @@ namespace CoreCourse.Efbasics.Core.Entities
         //unshadowed foreign key property
         //nullable for allow nulls
         public int? TeacherId { get; set; }
-        
+
+        public Decimal Price { get; set; }
+
     }
 }

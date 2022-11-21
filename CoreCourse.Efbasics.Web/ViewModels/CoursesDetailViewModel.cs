@@ -6,5 +6,6 @@ namespace CoreCourse.Efbasics.Web.ViewModels
     {
         public BaseViewModel Teacher { get; set; }
         public IEnumerable<BaseViewModel> Students { get; set; }
+        public Decimal Price { get; set; }
     }
 }

@@ -54,6 +54,10 @@ namespace CoreCourse.Efbasics.Web.Data
                 .HasOne(t => t.ContactInfo)
                 .WithOne(co => co.Teacher)
                 .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Course>()
+                .Property(c => c.Price)
+                .HasColumnType("decimal")
+                .HasPrecision(12,2);
             //end database configuration
             //seeding
             DataSeeder.Seed(modelBuilder);

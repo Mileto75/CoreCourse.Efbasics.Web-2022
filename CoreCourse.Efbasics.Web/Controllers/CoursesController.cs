@@ -39,11 +39,7 @@ namespace CoreCourse.Efbasics.Web.Controllers
                         Id = c.Teacher.Id,
                         Name = $"{c.Teacher.Firstname} {c.Teacher.Lastname}"
                     },
-                    Students = c.Students.Select(s => new BaseViewModel
-                    {
-                        Id = s.Id,
-                        Name = $"{s.Firstname} {s.Lastname}"
-                    })
+                    Price= c.Price,
                 });
             return View(coursesIndexViewModel);
 

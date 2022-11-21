@@ -37,6 +37,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                     Firstname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Lastname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactInfoId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GetDate()")
                 },
@@ -58,6 +59,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Firstname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Lastname = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactInfoId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -80,6 +82,7 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -115,6 +118,57 @@ namespace CoreCourse.Efbasics.Web.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ContactInfo",
+                columns: new[] { "Id", "CellNumber", "DateCreated", "Municipality", "Number", "PostalCode", "Street", "TelNumber" },
+                values: new object[,]
+                {
+                    { 1, null, null, "Gent", null, "9000", "High street", null },
+                    { 2, null, null, "Gent", null, "9000", "Low street", null },
+                    { 3, null, null, "Gent", null, "9000", "Low street", null },
+                    { 4, null, null, "Gent", null, "9000", "Low street", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "ContactInfoId", "Firstname", "Image", "Lastname", "Username" },
+                values: new object[,]
+                {
+                    { 1, 1, "Jimi", "person.jpg", "Hendrix", "jimi@gmail.com" },
+                    { 2, 2, "Rory", "person.jpg", "Gallagher", "jimi@gmail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Teachers",
+                columns: new[] { "Id", "ContactInfoId", "DateCreated", "Firstname", "Image", "Lastname" },
+                values: new object[,]
+                {
+                    { 1, 3, new DateTime(2022, 11, 21, 13, 43, 35, 411, DateTimeKind.Utc).AddTicks(7314), "Bart", "person.jpg", "Soete" },
+                    { 2, 4, new DateTime(2022, 11, 21, 13, 43, 35, 411, DateTimeKind.Utc).AddTicks(7317), "Willy", "person.jpg", "Schokkelé" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id", "DateCreated", "Name", "Price", "TeacherId" },
+                values: new object[,]
+                {
+                    { 1, null, "Wba", 260.00m, 1 },
+                    { 2, null, "Wfa", 240.00m, 2 },
+                    { 3, null, "Prb", 120.00m, 1 },
+                    { 4, null, "Pra", 230.00m, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CourseStudent",
+                columns: new[] { "CoursesId", "StudentsId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 2, 1 },
+                    { 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
