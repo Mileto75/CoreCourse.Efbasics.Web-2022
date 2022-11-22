@@ -25,8 +25,8 @@ namespace CoreCourse.Efbasics.Web.Controllers
             HttpContext.Response.Cookies.Append("SchoolShop", "I was here!",cookieOptions);
             //session with fictional username
             //session with fictional authentication flag
-            //HttpContext.Session.SetString("UserName", "BSchmitzie");
-            //HttpContext.Session.SetInt32("Authenticated", 1);
+            HttpContext.Session.SetString("UserName", "BSchmitzie");
+            HttpContext.Session.SetInt32("Authenticated", 1);
 
             return View();
         }
