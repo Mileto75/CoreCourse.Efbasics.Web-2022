@@ -4,4 +4,13 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
-<p>@ViewBag.CookieContent</p>
+<p>Cookie: @ViewBag.CookieContent</p>
+<p>Session data: Hello @ViewBag.UserName</p>
+@if(ViewBag.Authenticated == 1)
+{ 
+    <p>You are authenticated</p>
+}
+else
+{ 
+    <p>You are not logged in!</p>
+}

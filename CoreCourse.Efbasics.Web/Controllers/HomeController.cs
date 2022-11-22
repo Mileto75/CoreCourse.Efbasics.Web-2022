@@ -23,7 +23,11 @@ namespace CoreCourse.Efbasics.Web.Controllers
             };
             //add to response and add cookieOptions as third parameter
             HttpContext.Response.Cookies.Append("SchoolShop", "I was here!",cookieOptions);
-            
+            //session with fictional username
+            //session with fictional authentication flag
+            //HttpContext.Session.SetString("UserName", "BSchmitzie");
+            //HttpContext.Session.SetInt32("Authenticated", 1);
+
             return View();
         }
 
@@ -33,7 +37,11 @@ namespace CoreCourse.Efbasics.Web.Controllers
             ViewBag.CookieContent = HttpContext.Request.Cookies["SchoolShop"];
             //delete the cookie after getting the data
             HttpContext.Response.Cookies.Delete("SchoolShop");
-            
+            //get the session data
+            ViewBag.UserName = HttpContext
+                .Session.GetString("UserName");
+            ViewBag.Authenticated = HttpContext
+                .Session.GetInt32("Authenticated");
             return View();
         }
 

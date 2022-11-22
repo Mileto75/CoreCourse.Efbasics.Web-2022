@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SchoolDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb"))
     );
+//register session service
+builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -27,7 +29,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+//add session to the pipeline
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
