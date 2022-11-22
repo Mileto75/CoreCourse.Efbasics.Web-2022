@@ -17,7 +17,7 @@ namespace CoreCourse.Efbasics.Core.Entities
         //nullable for allow nulls
         public int? TeacherId { get; set; }
 
-        public Decimal Price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

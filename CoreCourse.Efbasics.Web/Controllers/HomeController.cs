@@ -15,11 +15,25 @@ namespace CoreCourse.Efbasics.Web.Controllers
 
         public IActionResult Index()
         {
+            //bake a cookie
+            //cookieOptions
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddMinutes(5)
+            };
+            //add to response and add cookieOptions as third parameter
+            HttpContext.Response.Cookies.Append("SchoolShop", "I was here!",cookieOptions);
+            
             return View();
         }
 
         public IActionResult Privacy()
         {
+            //get the cookie from the request
+            ViewBag.CookieContent = HttpContext.Request.Cookies["SchoolShop"];
+            //delete the cookie after getting the data
+            HttpContext.Response.Cookies.Delete("SchoolShop");
+            
             return View();
         }
 
