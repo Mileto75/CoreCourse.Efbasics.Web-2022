@@ -107,6 +107,8 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             await _schoolDbContext.Students.AddAsync(student);
             //save to db
             await _schoolDbContext.SaveChangesAsync();
+            //set TempData message
+            TempData["Message"] = "User added succesfully";
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -265,8 +267,10 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
                 await _schoolDbContext.SaveChangesAsync();
             }catch(DbException dbException) 
             {
-                Console.WriteLine (dbException.Message);
+                return View("Error");
             }
+            //set tempdata message
+            TempData["Message"] = "Student Updated succesfully";
             //redirect to update using anonymous object to send id
             return RedirectToAction("Update", new { Id = student.Id });
         }

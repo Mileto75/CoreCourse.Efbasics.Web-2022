@@ -5,6 +5,13 @@
         <h2>Our Students</h2>
         <a asp-area="Admin" asp-controller="Students" asp-action="Add"
            class="btn btn-outline-info">New student</a>
+        @* check for tempData message *@
+        @if(TempData.ContainsKey("Message"))
+        { 
+            <div class="alert alert-success" role="alert">
+              @TempData["Message"] 
+            </div>
+        }
         <table class="table table-hover table-responsive-lg">
             <tr>
                 <th>Name</th>

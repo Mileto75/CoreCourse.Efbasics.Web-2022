@@ -1,6 +1,12 @@
 ﻿@model StudentsUpdateViewModel
 <div class="row">
     <div class="col col-lg-4 mx-auto border border-1">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <div class="alert alert-primary" role="alert">
+                @TempData["Message"]
+            </div>
+            }
         <div class="text-center">
             <h2>@ViewBag.PageTitle</h2>
             <img src="~/images/@Model.ImageFilename" class="img-fluid" />
