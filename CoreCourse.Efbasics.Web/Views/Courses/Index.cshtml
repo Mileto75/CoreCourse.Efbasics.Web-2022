@@ -6,7 +6,7 @@
             <tr>
                 <th>Course</th>
                 <th>Teacher</th>
-                <th>Price</th>
+                <th colspan="2">Price</th>
             </tr>
             @foreach(var course in Model.Courses)
             {
@@ -14,6 +14,10 @@
                     <td>@course.Name</td>
                     <td>@course.Teacher.Name</td>
                     <td>@course.Price &euro;</td>
+                    <td><a asp-controller="Cart" asp-action="Add"
+                           asp-route-id="@course.Id"
+                           class="btn btn-outline-secondary">
+                        Buy</a></td>
                 </tr>
             }
         </table>
