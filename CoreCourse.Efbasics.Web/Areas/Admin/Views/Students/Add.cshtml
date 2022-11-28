@@ -6,8 +6,10 @@
               method="post" enctype="multipart/form-data">
             <partial name="_studentFormPartial" model="@Model" />
 
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary mt-1">Add</button>
         </form>
+        <a asp-area="Admin" asp-controller="Students" asp-action="Index"
+           class="btn btn-info mt-2 mb-2">Back</a>
     </div>
 </div>
 
