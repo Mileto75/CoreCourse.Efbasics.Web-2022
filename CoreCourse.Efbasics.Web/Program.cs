@@ -16,6 +16,7 @@ builder.Services.AddDbContext<SchoolDbContext>(
     );
 //register custom services
 builder.Services.AddScoped<IFormBuilderService,FormBuilderService>();
+builder.Services.AddScoped<IFileService,FileService>();
 
 //register session service
 builder.Services.AddSession();

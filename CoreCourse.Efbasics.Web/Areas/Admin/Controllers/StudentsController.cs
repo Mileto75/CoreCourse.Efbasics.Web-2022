@@ -17,12 +17,14 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         private readonly SchoolDbContext _schoolDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IFormBuilderService _formBuilderService;
+        private readonly IFileService _fileService;
 
-        public StudentsController(SchoolDbContext schoolDbContext, IWebHostEnvironment webHostEnvironment, IFormBuilderService formBuilderService)
+        public StudentsController(SchoolDbContext schoolDbContext, IWebHostEnvironment webHostEnvironment, IFormBuilderService formBuilderService, IFileService fileService)
         {
             _schoolDbContext = schoolDbContext;
             _webHostEnvironment = webHostEnvironment;
             _formBuilderService = formBuilderService;
+            _fileService = fileService;
         }
 
         public async Task<IActionResult> Index()
@@ -82,21 +84,8 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             }
             else
             {
-                //create unique filename
-                var fileName = $"{Guid.NewGuid()}" +
-                    $"_{studentsAddViewModel.Image.FileName}";
-                //create the path to store the file
-                var pathToFile = Path
-                    .Combine(_webHostEnvironment.WebRootPath,"Images",fileName);
-                //create a filestream and copy file
-                using(var fileStream = new FileStream(pathToFile
-                    ,FileMode.Create))
-                {
-                    //copy file to disk
-                    await studentsAddViewModel.Image.CopyToAsync(fileStream);
-                }
                 //add the filename to student
-                student.Image = fileName;
+                student.Image = await _fileService.StoreFileOnDisk(studentsAddViewModel.Image, "Images");
             }
             
             //add to the context
@@ -218,39 +207,10 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             //check for image upload
             if (studentsUpdateViewModel.Image != null)
             {
-                //delete old image
-                var pathToDelete = Path
-                    .Combine(_webHostEnvironment.WebRootPath,
-                    "Images", student.Image);
-                //delete it
-                try
-                {
-                    System.IO.File.Delete(pathToDelete);
-                }
-                catch (FileNotFoundException fileNotFoundException)
-                {
-                    Console.WriteLine(fileNotFoundException.Message);
-                }
-                //create new filename
-                var newFileName = $"{Guid.NewGuid()}_{studentsUpdateViewModel.Image.FileName}";
-                //create Filestream and copy file
-                var pathToFile = Path
-                    .Combine(_webHostEnvironment.WebRootPath,
-                    "Images", newFileName);
-                using (FileStream fileStream = new FileStream(pathToFile,FileMode.Create))
-                {
-                    try
-                    {
-                        await studentsUpdateViewModel
-                            .Image.CopyToAsync(fileStream);
-                        
-                    }catch(Exception exception)
-                    {
-                        Console.WriteLine(exception.Message);
-                    }
-                    //add new filename to student
-                    student.Image = newFileName;
-                };
+                //delete the image
+                _fileService.DeleteFileOnDisk(student.Image, "Images");
+                //add new filename to student
+                student.Image = await _fileService.StoreFileOnDisk(studentsUpdateViewModel.Image, "Images");
             }
             //store the student
             try 
@@ -265,7 +225,6 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             //redirect to update using anonymous object to send id
             return RedirectToAction("Update", new { Id = student.Id });
         }
-
     }
 }
 
