@@ -158,15 +158,10 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
                 {
                     Id = student.Id,
                     Firstname = student.Firstname,
-                    Lastname  = student.Lastname,
-                    Username  = student.Username,
-                    Courses = await _schoolDbContext
-                    .Courses.Select(c => new CheckboxModel
-                    {
-                        Value= c.Id,
-                        Text= c.Name,
-                    }
-                    ).ToListAsync(),
+                    Lastname = student.Lastname,
+                    Username = student.Username,
+                    Courses = await _formBuilderService
+                    .BuildCoursesCheckboxes(),
                     ImageFilename = student.Image
                 };
             //check the courses checkboxes
