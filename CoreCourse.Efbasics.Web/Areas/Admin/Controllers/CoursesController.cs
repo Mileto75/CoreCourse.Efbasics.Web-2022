@@ -1,6 +1,7 @@
 ﻿using CoreCourse.Efbasics.Core.Entities;
 using CoreCourse.Efbasics.Web.Areas.Admin.ViewModels;
 using CoreCourse.Efbasics.Web.Data;
+using CoreCourse.Efbasics.Web.Services;
 using CoreCourse.Efbasics.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,10 +15,12 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
     public class CoursesController : Controller
     {
         private readonly SchoolDbContext _schoolDbContext;
+        private readonly IFormBuilderService _formBuilderService;
 
-        public CoursesController(SchoolDbContext schoolDbContext)
+        public CoursesController(SchoolDbContext schoolDbContext, IFormBuilderService formBuilderService)
         {
             _schoolDbContext = schoolDbContext;
+            _formBuilderService = formBuilderService;
         }
 
         [HttpGet]
@@ -50,11 +53,7 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
                 .ToListAsync();
             //put in list
             coursesAddViewModel.Teachers
-                = teachers.Select(t => new SelectListItem
-                {
-                    Text = $"{t.Lastname} {t.Firstname}",
-                    Value = t.Id.ToString(),
-                });
+                = await _formBuilderService.BuildTeacherDropDown();
             //pass to the view
             ViewBag.PageTitle = "Add a course";
             return View(coursesAddViewModel);
@@ -75,17 +74,8 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.PageTitle = "Add a course";
-                //reload the teachers
-                var teachers = await _schoolDbContext
-                .Teachers
-                .OrderBy(t => t.Lastname)
-                .ToListAsync();
                 coursesAddViewModel.Teachers
-                    = teachers.Select(t => new SelectListItem
-                    {
-                        Text = $"{t.Lastname} {t.Firstname}",
-                        Value = t.Id.ToString(),
-                    });
+                    = await _formBuilderService.BuildTeacherDropDown();
                 return View(coursesAddViewModel);
             }
             //create the new course

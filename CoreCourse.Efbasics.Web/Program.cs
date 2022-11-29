@@ -1,4 +1,5 @@
 using CoreCourse.Efbasics.Web.Data;
+using CoreCourse.Efbasics.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SchoolDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb"))
     );
+//register custom services
+builder.Services.AddScoped<IFormBuilderService,FormBuilderService>();
+
 //register session service
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();

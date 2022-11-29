@@ -2,6 +2,7 @@
 using CoreCourse.Efbasics.Web.Areas.Admin.Models;
 using CoreCourse.Efbasics.Web.Areas.Admin.ViewModels;
 using CoreCourse.Efbasics.Web.Data;
+using CoreCourse.Efbasics.Web.Services;
 using CoreCourse.Efbasics.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
@@ -15,11 +16,13 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
     {
         private readonly SchoolDbContext _schoolDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IFormBuilderService _formBuilderService;
 
-        public StudentsController(SchoolDbContext schoolDbContext, IWebHostEnvironment webHostEnvironment)
+        public StudentsController(SchoolDbContext schoolDbContext, IWebHostEnvironment webHostEnvironment, IFormBuilderService formBuilderService)
         {
             _schoolDbContext = schoolDbContext;
             _webHostEnvironment = webHostEnvironment;
+            _formBuilderService = formBuilderService;
         }
 
         public async Task<IActionResult> Index()
@@ -37,21 +40,14 @@ namespace CoreCourse.Efbasics.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             ViewBag.PageTitle = "Add student";
             //get the courses and put in the model
             var studentsAddViewModel
                 = new StudentsAddViewModel();
             studentsAddViewModel.Courses
-                = _schoolDbContext
-                .Courses
-                .Select(c => new CheckboxModel
-                {
-                    Value= c.Id,
-                    Text= c.Name,
-                }).ToList();
-
+                = await _formBuilderService.BuildCoursesCheckboxes();
             return View(studentsAddViewModel);
         }
         [HttpPost]
